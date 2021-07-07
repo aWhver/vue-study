@@ -1,15 +1,15 @@
-# Vue-router概念？作用是什么？设计思路是什么？
+# vue-router概念？作用是什么？设计思路是什么？
 
-### Vue-router的定义？
-&emsp;&emsp;Vue-router是一个Vue插件，官方的路由管理器。作为一个应用/网页，内容肯定不止一个页面，开发一个单页应用就需要用户的操作跳转到相应的展示页面，因此需要一个东西来管理这些页面，Vue-router就是这么一个东西。
+### vue-router的定义？
+&emsp;&emsp;vue-router是一个Vue插件，官方的路由管理器。作为一个应用/网页，内容肯定不止一个页面，开发一个单页应用就需要用户的操作跳转到相应的展示页面，因此需要一个东西来管理这些页面，vue-router就是这么一个东西。
 
-### Vue-router的作用？
+### vue-router的作用？
 &emsp;&emsp;主要就是用作页面切换。根据浏览器地址的变化，在不刷新浏览器的情况下，实现内容的过渡，显示相应的页面内容。
 
 ### 设计思路
 
-- 首先Vue-router是一个插件，按照Vue官方对插件的定义就是需要一个具有 `install` 方法的 `对象` 或者 `class类`、`构造函数` ，install方法接受一个 `Vue构造函数` 的参数。
-- 我们使用的时候是以 `new VueRouter()` 的形式，注册路由表，因此 `Vue-router` 是一个 `class类` 或者 `构造函数`。
+- 首先vue-router是一个插件，按照Vue官方对插件的定义就是需要一个具有 `install` 方法的 `对象` 或者 `class类`、`构造函数` ，install方法接受一个 `Vue构造函数` 的参数。
+- 我们使用的时候是以 `new VueRouter()` 的形式，注册路由表，因此 `vue-router` 是一个 `class类` 或者 `构造函数`。
 - 通过 `Vue.use` 方法注入路由后，我们就直接可以使用 `router-link`、 `router-view` 这2个组件，可以知道vue-router在注册的时候的在install方法里注册了这2个全局组件
 - 在`class类` 或者 `构造函数`里实现路由监听，即 `hashchange` 监听，根据当前路由和已注册的路由表进行匹配
 - 因为 `router-view` 是路由页面的显示的逻辑，因此在该组件里实现路由匹配
