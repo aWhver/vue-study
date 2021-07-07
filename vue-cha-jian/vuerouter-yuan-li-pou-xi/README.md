@@ -1,2 +1,2 @@
-# Vue-router原理剖析
+# vue-router原理剖析
 
