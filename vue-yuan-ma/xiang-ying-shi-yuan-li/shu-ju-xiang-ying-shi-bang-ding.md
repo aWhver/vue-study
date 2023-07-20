@@ -107,7 +107,7 @@ function initData (vm: Component) {
 这里主要做了2件事：
 
 * data赋值给vm.\__data，_遍历data将属性进行代理，用`proxy`将`vm._data.xx`代理到`vm.xx`，这也是我们为什么可以在组件直接通过`this.xx`访问和设置data的原因
-* 调用`observer`对整个`data`进行响应式处理并观测其变化
+* 调用`observe`对整个`data`进行响应式处理并观测其变化
 
 
 
