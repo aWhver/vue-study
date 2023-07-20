@@ -16,3 +16,4 @@
   * [Vue实例化过程](vue-yuan-ma/shu-ju-qu-dong/vue-shi-li-hua-guo-cheng.md)
 * [响应式原理](vue-yuan-ma/xiang-ying-shi-yuan-li/README.md)
   * [watch监听](vue-yuan-ma/xiang-ying-shi-yuan-li/watch-jian-ting.md)
+  * [computed计算属性](vue-yuan-ma/xiang-ying-shi-yuan-li/computed-ji-suan-shu-xing.md)
