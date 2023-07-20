@@ -4,8 +4,9 @@
 
 ### 初始化
 
-初始化执行地方和[`watch`](https://juntong.gitbook.io/vuejs/vue-yuan-ma/shu-ju-qu-dong/watch-jian-ting#chu-shi-hua)监听器一样，执行时机在watch之前。在vue实例化的过程中，会执行原型上`_init`方法，该方法会依次执行一系列初始化过程，其中一项就是`initState`，该方法就对我们常用的data，props，computed等做了初始化。initState的代码路径在`src/core/instance/state.js`，在这内部就会判断是否传入了computed对象，然后对其初始化
+初始化执行地方和[<mark style="color:orange;">`watch`</mark>](https://juntong.gitbook.io/vuejs/vue-yuan-ma/shu-ju-qu-dong/watch-jian-ting#chu-shi-hua)监听器一样，执行时机在watch之前。在vue实例化的过程中，会执行原型上`_init`方法，该方法会依次执行一系列初始化过程，其中一项就是`initState`，该方法就对我们常用的data，props，computed等做了初始化。initState的代码路径在`src/core/instance/state.js`，在这内部就会判断是否传入了computed对象，然后对其初始化
 
+{% code lineNumbers="true" %}
 ```javascript
 export function initState (vm: Component) {
   vm._watchers = []
@@ -25,11 +26,13 @@ export function initState (vm: Component) {
   }
 }
 ```
+{% endcode %}
 
 ### 创建监听
 
 计算属性和watch监听器一样，同样会使用Watcher构造函数新建一个watcher对象，同时在vue实例下新建一个`_computedWatchers`对象，用来存储每一个计算属性的watcher,该对象的作用是对计算属性取值时用来获取相对应的watcher来进行表达式的计算和结果获取
 
+{% code lineNumbers="true" %}
 ```javascript
 // src/core/instance/state.js
 function initComputed (vm: Component, computed: Object) {
@@ -70,6 +73,7 @@ function initComputed (vm: Component, computed: Object) {
   }
  } 
 ```
+{% endcode %}
 
 ### 属性劫持处理
 
@@ -78,6 +82,7 @@ function initComputed (vm: Component, computed: Object) {
 * 判断属性值类型是否为对象，对象则将`set`函数设置为对象的set函数，`get`函数则根据是否是服务端渲染和对象的`cache`值是否为`true`,来决定用`createComputedGetter`的返回值做为`get`函数还是对象的get函数
 * 使用`Object.defineProperty`对vue实例进行劫持处理
 
+{% code lineNumbers="true" %}
 ```javascript
 export function defineComputed (
   target: any,
@@ -114,11 +119,13 @@ export function defineComputed (
   Object.defineProperty(target, key, sharedPropertyDefinition)
 }
 ```
+{% endcode %}
 
 ### 劫持函数
 
 通过属性`key`获取对应的`watcher`对象，判断watcher上的`dirty`是否为`true`，为`true`则执行对象下的`evaluate`方法更新`watcher.value`，`dirty`属性用来判断监听的值是否发生了变化，然后重新计算属性值；判断`Dep.target`当前是否存在Watcher对象，有的话，进行依赖收集，并将`dirty`置为`false`，依赖发生变化时，`watcher`的`update`方法调用将`dirty`置为`true`下次获取计算属性时需要重新计算watcher.value；返回watcher.value作为计算结果
 
+{% code lineNumbers="true" %}
 ```javascript
 function createComputedGetter (key) {
   return function computedGetter () {
@@ -142,6 +149,7 @@ function createComputedGetter (key) {
   }
 }
 ```
+{% endcode %}
 
 ### 总结
 

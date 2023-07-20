@@ -50,33 +50,32 @@ get: function reactiveGetter () {
 ```javascript
 // /src/core/observer/watcher.js
 cleanupDeps () {
-    let i = this.deps.length
-    while (i--) {
-      const dep = this.deps[i]
-      // 清理掉旧的订阅列表
-      // 这里也可以看出依赖和观察者是一对多的关系，即一个依赖可以有多个watcher
-      if (!this.newDepIds.has(dep.id)) {
-        dep.removeSub(this)
-      }
+  let i = this.deps.length
+  while (i--) {
+    const dep = this.deps[i]
+    // 清理掉旧的订阅列表
+    // 这里也可以看出依赖和观察者是一对多的关系，即一个依赖可以有多个watcher
+    if (!this.newDepIds.has(dep.id)) {
+      dep.removeSub(this)
     }
-    let tmp = this.depIds
-    this.depIds = this.newDepIds
-    this.newDepIds = tmp
-    this.newDepIds.clear()
-    tmp = this.deps
-    this.deps = this.newDeps
-    this.newDeps = tmp
-    this.newDeps.length = 0
   }
+  let tmp = this.depIds
+  this.depIds = this.newDepIds
+  this.newDepIds = tmp
+  this.newDepIds.clear()
+  tmp = this.deps
+  this.deps = this.newDeps
+  this.newDeps = tmp
+  this.newDeps.length = 0
+}
 ```
 {% endcode %}
-
-
 
 #### 触发更新
 
 当值发生变化时，会触发数据拦截的`set`函数，对新值做判断，如果是对象，则转换成响应式对象。然后调用依赖的`notify`，触发`watcher`的`update`方法进行更新
 
+{% code lineNumbers="true" %}
 ```javascript
 set: function reactiveSetter (newVal) {
   // 判断属性值是否设置了getter函数 
@@ -101,6 +100,7 @@ set: function reactiveSetter (newVal) {
   dep.notify()
 }
 ```
+{% endcode %}
 
 #### 总结
 

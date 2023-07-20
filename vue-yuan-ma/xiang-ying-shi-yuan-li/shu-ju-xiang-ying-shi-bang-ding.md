@@ -27,6 +27,7 @@ const proxyObj = Object.defineProperty(target, prop, descriptor);
 
 当vue构造函数实例化时会执行`_init`方法，这个过程中会做一系列事情，包括生命周期、事件、渲染、组件内部状态等等初始化的操作。其中的内部状态初始化，也就是`initState`，在这个函数里会对我们传入的`data`数据做响应式处理。initState的文件路径在`src/core/instance/state.js`
 
+{% code lineNumbers="true" %}
 ```javascript
 export function initState (vm: Component) {
   vm._watchers = []
@@ -49,9 +50,11 @@ export function initState (vm: Component) {
   }
 }
 ```
+{% endcode %}
 
 这里重点分析`initData`，[<mark style="color:green;">**initComputed**</mark>](https://juntong.gitbook.io/vuejs/vue-yuan-ma/shu-ju-qu-dong/computed-ji-suan-shu-xing)和[<mark style="color:green;">**initWatch**</mark>](https://juntong.gitbook.io/vuejs/vue-yuan-ma/shu-ju-qu-dong/watch-jian-ting)后面单独分析。
 
+{% code lineNumbers="true" %}
 ```javascript
 function initData (vm: Component) {
   let data = vm.$options.data
@@ -99,16 +102,18 @@ function initData (vm: Component) {
   observe(data, true /* asRootData */)
 }
 ```
+{% endcode %}
 
 这里主要做了2件事：
 
-* data赋值给vm._data，_遍历data将属性进行代理，用`proxy`将`vm._data.xx`代理到`vm.xx`，这也是我们为什么可以在组件直接通过`this.xx`访问和设置data的原因
+* data赋值给vm.\__data，_遍历data将属性进行代理，用`proxy`将`vm._data.xx`代理到`vm.xx`，这也是我们为什么可以在组件直接通过`this.xx`访问和设置data的原因
 * 调用`observer`对整个`data`进行响应式处理并观测其变化
 
 
 
 ### proxy
 
+{% code lineNumbers="true" %}
 ```javascript
 const sharedPropertyDefinition = {
   enumerable: true,
@@ -130,6 +135,7 @@ export function proxy (target: Object, sourceKey: string, key: string) {
   Object.defineProperty(target, key, sharedPropertyDefinition)
 }
 ```
+{% endcode %}
 
 `proxy`的作用就是将`target[sourceKey][key]`的读写变成了`target[key]`的读写。这里结合上面调用`proxy`的地方一起看就是将vm实例上`_data`对象属性都代理到vm上，当访问vm.xx的时候实际就是访问vm.\_data.xx，也就能够访问到我们定义的`data`数据了
 
@@ -139,8 +145,9 @@ export function proxy (target: Object, sourceKey: string, key: string) {
 
 &#x20;observe
 
-observer的作用就是创建一个观察者实例，用来检测数据变化，他是一个单例模式，如果实例不存在且满足特定条件就创建，存在就直接返回
+observe的作用就是创建一个观察者实例，用来检测数据变化，他是一个单例模式，如果实例不存在且满足特定条件就创建，存在就直接返回
 
+{% code lineNumbers="true" %}
 ```javascript
 export function observe (value: any, asRootData: ?boolean): Observer | void {
   if (!isObject(value) || value instanceof VNode) {
@@ -166,6 +173,7 @@ export function observe (value: any, asRootData: ?boolean): Observer | void {
   return ob
 }
 ```
+{% endcode %}
 
 #### Observer
 
@@ -177,6 +185,7 @@ export function observe (value: any, asRootData: ?boolean): Observer | void {
   2. 防止重复转换。Vue会检测一个对象是否有`__ob__`属性，有的话则说明已经是响应式数据了，就不会进行重复转换，其实就是`observe`的功能
 * 对数据进行类型判断，对象就遍历属性调用`defineReactive`对属性做`get/set`劫持处理，数组则会重写数组API的7个方法，然后对数组进行遍历调用`observe`对数组每一项做响应式处理
 
+{% code lineNumbers="true" %}
 ```javascript
 export class Observer {
   value: any;
@@ -223,6 +232,7 @@ export class Observer {
   }
 }
 ```
+{% endcode %}
 
 ### defineReactive
 
@@ -233,6 +243,7 @@ export class Observer {
 * `get`函数中判断当前是否有正在渲染的`Watcher`实例，有的话则进行依赖收集，将当前`Watcher`添加到订阅列表中
 * 数据变更时，触发`set`函数，`Dep`对象通知订阅列表中的`Watcher`进行更新
 
+{% code lineNumbers="true" %}
 ```javascript
 export function defineReactive (
   obj: Object,
@@ -298,6 +309,7 @@ export function defineReactive (
   })
 }
 ```
+{% endcode %}
 
 ### 总结
 
