@@ -143,7 +143,7 @@ export function proxy (target: Object, sourceKey: string, key: string) {
 
 ### observe和Observer
 
-&#x20;observe
+#### &#x20;observe
 
 observe的作用就是创建一个观察者实例，用来检测数据变化，他是一个单例模式，如果实例不存在且满足特定条件就创建，存在就直接返回
 
