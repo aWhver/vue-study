@@ -2,7 +2,7 @@
 description: 分析vue如何实现数据双向绑定的
 ---
 
-# 数据绑定
+# 数据响应式绑定
 
 * vue的双向绑定原理是通过`Object.defineProperty`这个API来实现的
 * 建立了一套以`发布订阅`为主的依赖收集更新机制，主要是`Dep`类和`Watcher`类(后面分析)
