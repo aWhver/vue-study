@@ -10,8 +10,9 @@
 * [Vuex原理剖析](vue-cha-jian/vuex-yuan-li-pou-xi/README.md)
   * [Vuex概念？作用？设计思路？](vue-cha-jian/vuex-yuan-li-pou-xi/vuex-gai-nian-zuo-yong-she-ji-si-lu.md)
 
-## Group 1
+## Vue源码
 
-* [Vue源码](group-1/vue-yuan-ma/README.md)
-  * [数据驱动](group-1/vue-yuan-ma/shu-ju-qu-dong/README.md)
-    * [Vue实例化过程](group-1/vue-yuan-ma/shu-ju-qu-dong/vue-shi-li-hua-guo-cheng.md)
+* [数据驱动](vue-yuan-ma/shu-ju-qu-dong/README.md)
+  * [Vue实例化过程](vue-yuan-ma/shu-ju-qu-dong/vue-shi-li-hua-guo-cheng.md)
+* [响应式原理](vue-yuan-ma/xiang-ying-shi-yuan-li/README.md)
+  * [watch监听](vue-yuan-ma/xiang-ying-shi-yuan-li/watch-jian-ting.md)
